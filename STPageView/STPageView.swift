@@ -238,6 +238,9 @@ public class STPageView: UIView, UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        }
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
         addSubview(scrollView);

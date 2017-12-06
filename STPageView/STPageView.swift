@@ -136,12 +136,12 @@ public class STPageView: UIView, UIScrollViewDelegate {
             var widthConstraint: NSLayoutConstraint?
             var leadingConstraint: NSLayoutConstraint?
             for constraint in theController.view.superview!.constraints {
-                if constraint.firstItem.isEqual(theController.view) && constraint.firstAttribute == .leading {
+                if (constraint.firstItem?.isEqual(theController.view))! && constraint.firstAttribute == .leading {
                     leadingConstraint = constraint
                     if widthConstraint != nil && leadingConstraint != nil {
                         break
                     }
-                } else if constraint.firstItem.isEqual(theController.view) && constraint.firstAttribute == .width {
+                } else if (constraint.firstItem?.isEqual(theController.view))! && constraint.firstAttribute == .width {
                     widthConstraint = constraint
                     if widthConstraint != nil && leadingConstraint != nil {
                         break
@@ -181,12 +181,12 @@ public class STPageView: UIView, UIScrollViewDelegate {
             var widthConstraint: NSLayoutConstraint?
             var leadingConstraint: NSLayoutConstraint?
             for constraint in theController.view.superview!.constraints {
-                if constraint.firstItem.isEqual(theController.view) && constraint.firstAttribute == .leading {
+                if (constraint.firstItem?.isEqual(theController.view))! && constraint.firstAttribute == .leading {
                     leadingConstraint = constraint
                     if widthConstraint != nil && leadingConstraint != nil {
                         break
                     }
-                } else if constraint.firstItem.isEqual(theController.view) && constraint.firstAttribute == .width {
+                } else if (constraint.firstItem?.isEqual(theController.view))! && constraint.firstAttribute == .width {
                     widthConstraint = constraint
                     if widthConstraint != nil && leadingConstraint != nil {
                         break
@@ -313,7 +313,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
     func updateScrollContainerViewWidthConstraint() {
         var scrollContainerViewWidthConstraint: NSLayoutConstraint?
         for constraint in scrollContainerView.superview!.constraints {
-            if constraint.firstItem.isEqual(scrollContainerView) && constraint.firstAttribute == .width {
+            if (constraint.firstItem?.isEqual(scrollContainerView))! && constraint.firstAttribute == .width {
                 scrollContainerViewWidthConstraint = constraint
                 break
             }
@@ -336,7 +336,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func handleApplicationWillChangeStatusBarOrientation(_ sender: Notification) {
+    @objc func handleApplicationWillChangeStatusBarOrientation(_ sender: Notification) {
         shouldResetPage = true
     }
     

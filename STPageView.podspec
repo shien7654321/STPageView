@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.frameworks   = "Foundation", "UIKit"
   s.source_files = "STPageView/*.{swift}"
   s.compiler_flags = "-fmodules"
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.description    = <<-DESC
   STPageView is a paging view..
                        DESC

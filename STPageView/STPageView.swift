@@ -329,7 +329,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
     // MARK: - Observe
     
     func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(STPageView.handleApplicationWillChangeStatusBarOrientation(_:)), name: NSNotification.Name.UIApplicationWillChangeStatusBarOrientation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleApplicationWillChangeStatusBarOrientation(_:)), name: NSNotification.Name.UIApplicationWillChangeStatusBarOrientation, object: nil)
     }
     
     func removeObserver() {

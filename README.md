@@ -11,7 +11,7 @@ STPageView is a paging view.You can use it to layout multiple view controllers, 
 
 - iOS 8.0 or later (For iOS 8.0 before, maybe it can work, but I have not tested.)
 - ARC
-- Swift 3.0
+- Swift 4.0
 
 ## Installation
 

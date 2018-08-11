@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.compiler_flags = "-fmodules"
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.description    = <<-DESC
-  STPageView is a paging view..
+  STPageView is a paging view.
                        DESC
 
 end

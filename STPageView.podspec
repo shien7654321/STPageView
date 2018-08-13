@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "STPageView"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "A paging view."
   s.homepage     = "https://github.com/shien7654321/STPageView"
   s.author       = { "Suta" => "shien7654321@163.com" }
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.frameworks   = "Foundation", "UIKit"
   s.source_files = "STPageView/*.{swift}"
   s.compiler_flags = "-fmodules"
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.1' }
   s.description    = <<-DESC
   STPageView is a paging view.
                        DESC

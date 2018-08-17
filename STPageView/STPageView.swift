@@ -47,13 +47,13 @@ public class STPageView: UIView, UIScrollViewDelegate {
         removeObserver()
     }
     
-    override public init(frame: CGRect) {
+    override private init(frame: CGRect) {
         super.init(frame: frame)
         configure()
         buildUI()
     }
     
-    public convenience init() {
+    private convenience init() {
         self.init(frame: .zero)
     }
     
@@ -110,6 +110,8 @@ public class STPageView: UIView, UIScrollViewDelegate {
         controllers.insert(controller, at: index)
         updateScrollContainerViewWidthConstraint()
         if let myController = myController() {
+            
+            
             myController.addChildViewController(controller)
             scrollContainerView.insertSubview(controller.view, at: index)
             

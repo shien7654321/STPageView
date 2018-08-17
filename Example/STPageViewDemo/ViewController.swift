@@ -11,10 +11,6 @@ import STPageView
 
 class ViewController: UIViewController, STPageViewDelegate {
     
-    var pageView: STPageView!
-    
-    // MARK: -
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         var controllers = [UIViewController]()
@@ -23,7 +19,7 @@ class ViewController: UIViewController, STPageViewDelegate {
             controller.view.backgroundColor = UIColor(red: CGFloat(arc4random() % 256) / 255, green: CGFloat(arc4random() % 256) / 255, blue: CGFloat(arc4random() % 256) / 255, alpha: 1)
             controllers.append(controller)
         }
-        pageView = STPageView(controllers: controllers)
+        let pageView = STPageView(controllers: controllers)
         pageView.delegate = self
         view.addSubview(pageView)
         pageView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +27,6 @@ class ViewController: UIViewController, STPageViewDelegate {
         let pageViewSecondConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[pageView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["pageView" : pageView])
         view.addConstraints(pageViewFirstConstraintArray)
         view.addConstraints(pageViewSecondConstraintArray)
-        
         pageView.page = 1
     }
     
@@ -42,7 +37,7 @@ class ViewController: UIViewController, STPageViewDelegate {
     }
     
     func pageView(_ pageView: STPageView, didSelect controller: UIViewController) {
-        print("PageView didSelect \(controller), index \(String(describing: pageView.controllers.index(of: controller)))")
+        print("PageView didSelect \(controller), index \(pageView.controllers.index(of: controller)!)")
     }
     
 }

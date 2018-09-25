@@ -112,7 +112,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         if let myController = myController() {
             
             
-            myController.addChildViewController(controller)
+            myController.addChild(controller)
             scrollContainerView.insertSubview(controller.view, at: index)
             
             controller.view.translatesAutoresizingMaskIntoConstraints = false
@@ -214,7 +214,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
             }
         }
         controller.view.removeFromSuperview()
-        controller.removeFromParentViewController()
+        controller.removeFromParent()
         controllers.remove(at: index)
         updateScrollContainerViewWidthConstraint()
         if page >= index && page >= controllers.count {
@@ -247,8 +247,8 @@ public class STPageView: UIView, UIScrollViewDelegate {
         scrollView.delegate = self
         addSubview(scrollView);
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let scrollViewFirstConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[scrollView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["scrollView" : scrollView])
-        let scrollViewSecondConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[scrollView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["scrollView" : scrollView])
+        let scrollViewFirstConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[scrollView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["scrollView" : scrollView])
+        let scrollViewSecondConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[scrollView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["scrollView" : scrollView])
         addConstraints(scrollViewFirstConstraintArray)
         addConstraints(scrollViewSecondConstraintArray)
         
@@ -289,7 +289,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         }
         if let myController = myController() {
             for (index, controller) in controllers.enumerated() {
-                myController.addChildViewController(controller)
+                myController.addChild(controller)
                 scrollContainerView.addSubview(controller.view)
                 controller.view.translatesAutoresizingMaskIntoConstraints = false
                 let controllerViewFirstConstraint = NSLayoutConstraint(item: controller.view, attribute: .top, relatedBy: .equal, toItem: controller.view.superview, attribute: .top, multiplier: 1, constant: 0)
@@ -331,7 +331,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
     // MARK: - Observe
     
     func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleApplicationWillChangeStatusBarOrientation(_:)), name: NSNotification.Name.UIApplicationWillChangeStatusBarOrientation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleApplicationWillChangeStatusBarOrientation(_:)), name: UIApplication.willChangeStatusBarOrientationNotification, object: nil)
     }
     
     func removeObserver() {
@@ -349,7 +349,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
             if let oldControllerViewSuperview = oldController.view.superview {
                 if oldControllerViewSuperview.isEqual(scrollContainerView) {
                     oldController.view.removeFromSuperview()
-                    oldController.removeFromParentViewController()
+                    oldController.removeFromParent()
                 }
             }
         }

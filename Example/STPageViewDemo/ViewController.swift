@@ -23,8 +23,8 @@ class ViewController: UIViewController, STPageViewDelegate {
         pageView.delegate = self
         view.addSubview(pageView)
         pageView.translatesAutoresizingMaskIntoConstraints = false
-        let pageViewFirstConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[pageView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["pageView" : pageView])
-        let pageViewSecondConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[pageView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["pageView" : pageView])
+        let pageViewFirstConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[pageView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["pageView" : pageView])
+        let pageViewSecondConstraintArray = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[pageView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["pageView" : pageView])
         view.addConstraints(pageViewFirstConstraintArray)
         view.addConstraints(pageViewSecondConstraintArray)
         pageView.page = 1

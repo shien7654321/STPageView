@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/STPageView.svg?style=flat)](http://cocoapods.org/pods/STPageView)
 
 ## A paging view.
-STPageView is a paging view.You can use it to layout multiple view controllers, switching through gestures.And it supports both horizontal and vertical directions.
+STPageView is a paging view. You can use it to layout multiple view controllers, switching through gestures. And it supports both horizontal and vertical directions.
 
 ![STPageViewPreview01](https://github.com/shien7654321/STPageView/raw/master/Preview/STPageViewPreview01.gif)
 

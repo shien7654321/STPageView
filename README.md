@@ -50,10 +50,6 @@ let pageView = STPageView(controllers: [controllerA, controllerB])
 Implement STPageViewDelegate, you can using some STPageView delegate functions:
 
 ```swift
-func pageView(_ pageView: STPageView, shouldSelect controller: UIViewController) -> Bool {
-    return true
-}
-    
 func pageView(_ pageView: STPageView, didSelect controller: UIViewController) {
     print("PageView didSelect \(controller), index \(pageView.controllers.index(of: controller)!)")
 }

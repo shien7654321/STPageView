@@ -10,7 +10,6 @@ import UIKit
 
 @objc public protocol STPageViewDelegate {
     @objc optional func pageView(_ pageView: STPageView, didSelect controller: UIViewController)
-    @objc optional func pageView(_ pageView: STPageView, shouldSelect controller: UIViewController) -> Bool
 }
 
 public class STPageView: UIView, UIScrollViewDelegate {
@@ -22,24 +21,28 @@ public class STPageView: UIView, UIScrollViewDelegate {
     }
     public var page = 0 {
         didSet {
-            guard page >= 0 && page < controllers.count else {
-                page = oldValue
-                return
+            if page == 0 || controllers.isEmpty {
+                didSetPage(oldValue)
+            } else {
+                guard page >= 0 && page < controllers.count else {
+                    if oldValue >= 0 && oldValue < controllers.count {
+                        page = oldValue
+                    } else {
+                        page = 0
+                    }
+                    return
+                }
+                didSetPage(oldValue)
             }
-            if let shouldSelect = delegate?.pageView?(self, shouldSelect: controllers[page]), !shouldSelect {
-                page = oldValue
-                return
-            }
-            didSetPage(oldValue)
         }
     }
     public weak var delegate: STPageViewDelegate?
-    var scrollView: UIScrollView!
-    var scrollContainerView: UIView!
-    var setPageBySelf = false
-    var shouldResetPage = true
-    var currentPage = 0
-    var buildedUI = false
+    public private(set) var scrollView: UIScrollView!
+    private var scrollContainerView: UIView!
+    private var setPageBySelf = false
+    private var shouldResetPage = true
+    private var currentPage = 0
+    private var buildedUI = false
     
     // MARK: -
     
@@ -90,9 +93,6 @@ public class STPageView: UIView, UIScrollViewDelegate {
         guard newPage >= 0 && newPage < controllers.count else {
             return
         }
-        if let shouldSelect = delegate?.pageView?(self, shouldSelect: controllers[newPage]), !shouldSelect {
-            return
-        }
         setPageBySelf = true
         page = newPage
         let scrollViewContentOffsetX = CGFloat(page) * scrollView.frame.width
@@ -101,6 +101,8 @@ public class STPageView: UIView, UIScrollViewDelegate {
     
     public func resetControllers(_ controllers: [UIViewController]) {
         self.controllers = controllers
+        setPageBySelf = true
+        page = 0
     }
     
     public func insertController(_ controller: UIViewController, atIndex index: Int) {
@@ -225,11 +227,11 @@ public class STPageView: UIView, UIScrollViewDelegate {
     
     // MARK: - Private
     
-    func configure() {
+    private func configure() {
         addObserver()
     }
     
-    func buildUI() {
+    private func buildUI() {
         
         guard !buildedUI else {
             return
@@ -270,7 +272,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         
     }
     
-    func myController() -> UIViewController? {
+    private func myController() -> UIViewController? {
         var controller: UIViewController?
         var responder = next
         while responder != nil {
@@ -283,7 +285,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         return controller
     }
     
-    func setupControllers() {
+    private func setupControllers() {
         guard !controllers.isEmpty && scrollContainerView.subviews.count == 0 else {
             return
         }
@@ -312,7 +314,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
         }
     }
     
-    func updateScrollContainerViewWidthConstraint() {
+    private func updateScrollContainerViewWidthConstraint() {
         var scrollContainerViewWidthConstraint: NSLayoutConstraint?
         for constraint in scrollContainerView.superview!.constraints {
             if (constraint.firstItem?.isEqual(scrollContainerView))! && constraint.firstAttribute == .width {
@@ -330,21 +332,21 @@ public class STPageView: UIView, UIScrollViewDelegate {
     
     // MARK: - Observe
     
-    func addObserver() {
+    private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleApplicationWillChangeStatusBarOrientation(_:)), name: UIApplication.willChangeStatusBarOrientationNotification, object: nil)
     }
     
-    func removeObserver() {
+    private func removeObserver() {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc func handleApplicationWillChangeStatusBarOrientation(_ sender: Notification) {
+    @objc private func handleApplicationWillChangeStatusBarOrientation(_ sender: Notification) {
         shouldResetPage = true
     }
     
     // MARK: - getter & setter
     
-    func didSetControllers(_ oldValue: [UIViewController]) {
+    private func didSetControllers(_ oldValue: [UIViewController]) {
         for oldController in oldValue {
             if let oldControllerViewSuperview = oldController.view.superview {
                 if oldControllerViewSuperview.isEqual(scrollContainerView) {
@@ -355,15 +357,25 @@ public class STPageView: UIView, UIScrollViewDelegate {
         }
         updateScrollContainerViewWidthConstraint()
         setupControllers()
+        if oldValue.isEmpty && !controllers.isEmpty  {
+            setPageBySelf = true
+            page = 0
+            delegate?.pageView?(self, didSelect: controllers[page])
+        } else if !oldValue.isEmpty && controllers.isEmpty {
+            setPageBySelf = true
+            page = 0
+        } else if page >= controllers.count {
+            page = 0
+        }
     }
     
-    func didSetPage(_ oldValue: Int) {
-        if (setPageBySelf) {
+    private func didSetPage(_ oldValue: Int) {
+        if setPageBySelf {
             setPageBySelf = false
         } else {
             setPage(page)
         }
-        if (page != oldValue) {
+        if page != oldValue && controllers.count > page {
             delegate?.pageView?(self, didSelect: controllers[page])
         }
     }
@@ -389,12 +401,7 @@ public class STPageView: UIView, UIScrollViewDelegate {
                 newPage = (Int)(ceil(Double(scrollView.contentSize.width / pageWidth)) - 1)
             }
         }
-        
-        if let shouldSelect = delegate?.pageView?(self, shouldSelect: controllers[newPage]), !shouldSelect {
-            targetContentOffset.pointee = CGPoint(x: CGFloat(page) * pageWidth, y: targetContentOffset.pointee.y)
-        } else {
-            targetContentOffset.pointee = CGPoint(x: CGFloat(newPage) * pageWidth, y: targetContentOffset.pointee.y)
-        }
+        targetContentOffset.pointee = CGPoint(x: CGFloat(newPage) * pageWidth, y: targetContentOffset.pointee.y)
         setPageBySelf = true
         page = newPage
         

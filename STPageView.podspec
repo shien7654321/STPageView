@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "STPageView"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "A paging view."
   s.homepage     = "https://github.com/shien7654321/STPageView"
   s.author       = { "Suta" => "shien7654321@163.com" }

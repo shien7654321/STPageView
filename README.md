@@ -1,8 +1,9 @@
 # STPageView
 
+[![Language](https://img.shields.io/badge/language-Swift-limegreen.svg?style=flat)](http://cocoapods.org/pods/STPageView)
+[![Platform](https://img.shields.io/cocoapods/p/STPageView.svg?style=flat)](http://cocoapods.org/pods/STPageView)
 [![Version](https://img.shields.io/cocoapods/v/STPageView.svg?style=flat)](http://cocoapods.org/pods/STPageView)
 [![License](https://img.shields.io/cocoapods/l/STPageView.svg?style=flat)](http://cocoapods.org/pods/STPageView)
-[![Platform](https://img.shields.io/cocoapods/p/STPageView.svg?style=flat)](http://cocoapods.org/pods/STPageView)
 
 ## A paging view.
 STPageView is a paging view. You can use it to layout multiple view controllers, switching through gestures. And it supports both horizontal and vertical directions.

@@ -33,7 +33,7 @@ class ViewController: UIViewController, STPageViewDelegate {
     // MARK: - STPageViewDelegate
     
     func pageView(_ pageView: STPageView, didSelect controller: UIViewController) {
-        print("PageView didSelect \(controller), index \(pageView.controllers.index(of: controller)!)")
+        print("PageView didSelect \(controller), index \(pageView.controllers.firstIndex(of: controller)!)")
     }
     
 }
